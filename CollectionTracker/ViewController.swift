@@ -30,6 +30,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         catch{
             print("Error getting core data")
         }
+        
+        itemListTableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,10 +47,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = UITableViewCell()
         let item = items[indexPath.row]
         cell.textLabel!.text = item.title
-        cell.imageView!.image = UIImage(data: item.image as! Data)
+        cell.imageView!.image = UIImage(data: item.image! as Data)
         
         return cell
-        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = items[indexPath.row]
+        performSegue(withIdentifier: "itemSegue", sender: item)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextVC = segue.destination as! ItemViewController
+        nextVC.item = sender as? Item
     }
 }
 
