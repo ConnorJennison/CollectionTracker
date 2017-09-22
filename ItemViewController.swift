@@ -65,7 +65,7 @@ class ItemViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     @IBAction func addTapped(_ sender: Any) {
-        if item != nil
+        if item != nil && itemNameTextField.text != ""
         {
             item!.title = itemNameTextField.text
             item!.image = UIImagePNGRepresentation(itemImageView.image!)! as NSData
@@ -73,13 +73,15 @@ class ItemViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             
         else
         {
-
-            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-            let item = Item(context: context)
-            
-            
-            item.title = itemNameTextField.text
-            item.image = UIImagePNGRepresentation(itemImageView.image!)! as NSData
+            if itemNameTextField.text != ""
+            {
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                let item = Item(context: context)
+                
+                
+                item.title = itemNameTextField.text
+                item.image = UIImagePNGRepresentation(itemImageView.image!)! as NSData
+            }
         }
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
